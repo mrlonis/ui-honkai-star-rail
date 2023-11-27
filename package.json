@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev -p 3001",
     "lint": "next lint",
     "prepare": "husky install",
     "prettier": "prettier --config .prettierrc --write \"**/*.{css,html,js,jsx,json,md,scss,ts,tsx}\"",
@@ -13,7 +13,7 @@
     "sort-package-json": "sort-package-json && prettier --config .prettierrc --write package.json",
     "sort-prettierrc": "sort-json --indent 2 --depth 4 .prettierrc && prettier --config .prettierrc --write .prettierrc",
     "sort-vscode-settings-json": "sort-json --indent 2 --depth 4 .vscode/settings.json && prettier --config .prettierrc --write .vscode/settings.json",
-    "start": "npm run build && next start",
+    "start": "npm run build && next start -p 3001",
     "test": "npm run lint"
   },
   "dependencies": {
