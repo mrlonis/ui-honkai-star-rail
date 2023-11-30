@@ -27,7 +27,7 @@ function buildImageUrl(imageUrl: string | null | undefined) {
   if (!imageUrl) {
     return ''
   }
-  return `http://localhost:9002/api/${imageUrl}`
+  return `http://localhost:9003/api/${imageUrl}`
 }
 
 export default function RelicsComponent(
@@ -62,9 +62,6 @@ export default function RelicsComponent(
       case 'name':
         return <User avatarProps={{ radius: 'lg', src: buildImageUrl(relic.imageUrl) }} name={cellValue} />
       case 'effect':
-        if (relic.onePieceSetEffect) {
-          return <p>{relic.onePieceSetEffect}</p>
-        }
         if (relic.twoPieceSetEffect && relic.fourPieceSetEffect) {
           return (
             <div>

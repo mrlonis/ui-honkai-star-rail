@@ -57,7 +57,7 @@ const relicDepths = [
 ]
 
 const fetcher = (relicId: string, relicDepth: string) => {
-  const url = `http://localhost:9002/api/v2/artifactBreakdown?artifactId=${relicId}&artifactDepth=${relicDepth}`
+  const url = `http://localhost:9003/api/v2/relicBreakdown?relicId=${relicId}&relicDepth=${relicDepth}`
   return fetch(url, { next: { revalidate: 1 } }).then((res) => res.json())
 }
 
@@ -102,13 +102,6 @@ export default function RelicBreakdownComponent(props: { relicId: string }) {
   const renderPieceEffect = React.useCallback((relicBreakdown: RelicBreakdown | null | undefined) => {
     if (!relicBreakdown) {
       return <p>No Relic to Display</p>
-    }
-    if (relicBreakdown.onePieceSetEffect) {
-      return (
-        <p>
-          <b>1-Piece:</b> {relicBreakdown.onePieceSetEffect}
-        </p>
-      )
     }
     if (relicBreakdown.twoPieceSetEffect && relicBreakdown.fourPieceSetEffect) {
       return (
@@ -204,26 +197,18 @@ export default function RelicBreakdownComponent(props: { relicId: string }) {
             </TableRow>
             <TableRow key="2">
               <TableCell className="w-[20%]">
-                <b>Sands Stats</b>
+                <b>Body Stats</b>
               </TableCell>
               <TableCell className="w-[80%]">
-                {buildAccordion(createAccordionData(relicBreakdown?.sandsStats))}
+                {buildAccordion(createAccordionData(relicBreakdown?.bodyStats))}
               </TableCell>
             </TableRow>
             <TableRow key="3">
               <TableCell className="w-[20%]">
-                <b>Goblet Stats</b>
+                <b>Feet Stats</b>
               </TableCell>
               <TableCell className="w-[80%]">
-                {buildAccordion(createAccordionData(relicBreakdown?.gobletStats))}
-              </TableCell>
-            </TableRow>
-            <TableRow key="4">
-              <TableCell className="w-[20%]">
-                <b>Circlet Stats</b>
-              </TableCell>
-              <TableCell className="w-[80%]">
-                {buildAccordion(createAccordionData(relicBreakdown?.circletStats))}
+                {buildAccordion(createAccordionData(relicBreakdown?.feetStats))}
               </TableCell>
             </TableRow>
           </TableBody>

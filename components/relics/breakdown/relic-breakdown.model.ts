@@ -2,13 +2,11 @@ export interface RelicBreakdown {
   id: string
   name: string
   imageUrl: string | null | undefined
-  onePieceSetEffect: string | null | undefined
   twoPieceSetEffect: string | null | undefined
   fourPieceSetEffect: string | null | undefined
   characters: RelicBreakdownCharacter[] | null | undefined
-  sandsStats: RelicBreakdownMap | null | undefined
-  gobletStats: RelicBreakdownMap | null | undefined
-  circletStats: RelicBreakdownMap | null | undefined
+  bodyStats: RelicBreakdownMap | null | undefined
+  feetStats: RelicBreakdownMap | null | undefined
 }
 
 export interface RelicBreakdownMap {

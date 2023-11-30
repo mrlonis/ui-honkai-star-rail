@@ -5,7 +5,7 @@ import { RelicsResponse } from '@/components/relics/relics-response'
 export const dynamic = 'force-dynamic'
 
 async function getRelic(name: string): Promise<RelicsResponse> {
-  const res = await fetch(`http://localhost:9002/api/v2/artifact?name=${name}`, { next: { revalidate: 1 } })
+  const res = await fetch(`http://localhost:9003/api/v2/relic?name=${name}`, { next: { revalidate: 1 } })
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
 
