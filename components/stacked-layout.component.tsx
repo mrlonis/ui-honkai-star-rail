@@ -32,6 +32,7 @@ export interface INavigation {
 const navigation: INavigation[] = [
   { name: 'Characters', href: '/' },
   { name: 'Relics', href: '/relics' },
+  { name: 'Ornaments', href: '/ornaments' },
 ]
 
 function determineIsActive(pathname: string, item: INavigation) {

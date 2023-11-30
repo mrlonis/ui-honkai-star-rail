@@ -20,23 +20,23 @@ import {
 } from '@nextui-org/react'
 import React from 'react'
 import useSWR from 'swr'
-import { RelicBreakdown, RelicBreakdownCharacter, RelicBreakdownMap } from './relic-breakdown.model'
+import { OrnamentBreakdown, OrnamentBreakdownCharacter, OrnamentBreakdownMap } from './ornament-breakdown.model'
 import { build_substats_string, getImageUrl } from './utils'
 
 interface AccordionData {
-  [key: string]: string | number | RelicBreakdownCharacter[]
+  [key: string]: string | number | OrnamentBreakdownCharacter[]
   id: number
   stat: string
-  characters: RelicBreakdownCharacter[]
+  characters: OrnamentBreakdownCharacter[]
 }
 
-function createAccordionData(relicBreakdownMap: RelicBreakdownMap | null | undefined): AccordionData[] {
-  if (!relicBreakdownMap) {
+function createAccordionData(ornamentBreakdownMap: OrnamentBreakdownMap | null | undefined): AccordionData[] {
+  if (!ornamentBreakdownMap) {
     return []
   }
   let returnValue: AccordionData[] = []
   let i = 0
-  for (const [key, value] of Object.entries(relicBreakdownMap)) {
+  for (const [key, value] of Object.entries(ornamentBreakdownMap)) {
     if (value !== null && value !== undefined) {
       returnValue.push({ id: i, stat: key, characters: value })
       i += 1
@@ -56,31 +56,31 @@ const relicDepths = [
   { label: '3', value: 3 },
 ]
 
-const fetcher = (relicId: string, relicDepth: string) => {
-  const url = `http://localhost:9003/api/v2/relicBreakdown?relicId=${relicId}&relicDepth=${relicDepth}`
+const fetcher = (ornamentId: string, ornamentDepth: string) => {
+  const url = `http://localhost:9003/api/v2/ornamentBreakdown?ornamentId=${ornamentId}&ornamentDepth=${ornamentDepth}`
   return fetch(url, { next: { revalidate: 1 } }).then((res) => res.json())
 }
 
-export default function RelicBreakdownComponent(props: { relicId: string }) {
+export default function OrnamentBreakdownComponent(props: { ornamentId: string }) {
   // URL -> `/dashboard?search=my-project`
   // `search` -> 'my-project'
-  const [relicDepth, setRelicDepth] = React.useState('1')
+  const [ornamentDepth, setOrnamentDepth] = React.useState('1')
 
   const handleSelectionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (e.target) {
-      setRelicDepth(e.target.value)
+      setOrnamentDepth(e.target.value)
     }
   }
 
   const {
-    data: relicBreakdown,
+    data: ornamentBreakdown,
     error,
     isLoading,
-  } = useSWR<RelicBreakdown, any, string[]>([props.relicId, relicDepth], ([relicId, relicDepth]) =>
-    fetcher(relicId, relicDepth),
+  } = useSWR<OrnamentBreakdown, any, string[]>([props.ornamentId, ornamentDepth], ([ornamentId, ornamentDepth]) =>
+    fetcher(ornamentId, ornamentDepth),
   )
 
-  const renderSubstatsCell = React.useCallback((item: RelicBreakdownCharacter, columnKey: string | number) => {
+  const renderSubstatsCell = React.useCallback((item: OrnamentBreakdownCharacter, columnKey: string | number) => {
     switch (columnKey) {
       case 'name':
         return (
@@ -99,16 +99,14 @@ export default function RelicBreakdownComponent(props: { relicId: string }) {
     }
   }, [])
 
-  const renderPieceEffect = React.useCallback((relicBreakdown: RelicBreakdown | null | undefined) => {
+  const renderPieceEffect = React.useCallback((relicBreakdown: OrnamentBreakdown | null | undefined) => {
     if (!relicBreakdown) {
       return <p>No Relic to Display</p>
     }
-    if (relicBreakdown.twoPieceSetEffect && relicBreakdown.fourPieceSetEffect) {
+    if (relicBreakdown.twoPieceSetEffect) {
       return (
         <p>
           <b>2-Piece:</b> {relicBreakdown.twoPieceSetEffect}
-          <br />
-          <b>4-Piece:</b> {relicBreakdown.fourPieceSetEffect}
         </p>
       )
     }
@@ -156,18 +154,18 @@ export default function RelicBreakdownComponent(props: { relicId: string }) {
   return (
     <Card className="max-w-[100%]">
       <CardHeader className="flex gap-3">
-        <Image alt="relic logo" height={40} radius="sm" src={getImageUrl(relicBreakdown?.imageUrl)} width={40} />
+        <Image alt="relic logo" height={40} radius="sm" src={getImageUrl(ornamentBreakdown?.imageUrl)} width={40} />
         <div className="flex flex-col">
-          <p className="text-md">{relicBreakdown?.name}</p>
+          <p className="text-md">{ornamentBreakdown?.name}</p>
         </div>
       </CardHeader>
       <Divider />
       <CardBody>
-        {renderPieceEffect(relicBreakdown)}
+        {renderPieceEffect(ornamentBreakdown)}
         <br />
         <Select
           label="Select Relic Depth"
-          selectedKeys={[relicDepth]}
+          selectedKeys={[ornamentDepth]}
           className="max-w-xs"
           onChange={handleSelectionChange}
         >
@@ -188,30 +186,30 @@ export default function RelicBreakdownComponent(props: { relicId: string }) {
           <TableBody emptyContent={'No rows to display.'}>
             <TableRow key="1">
               <TableCell className="w-[20%]">
-                <b>Head & Hands Stats</b>
+                <b>General Substats</b>
               </TableCell>
               <TableCell className="w-[80%]">
                 {buildAccordion(
                   createAccordionData({
-                    Substats: relicBreakdown?.characters,
-                  } as RelicBreakdownMap),
+                    Substats: ornamentBreakdown?.characters,
+                  } as OrnamentBreakdownMap),
                 )}
               </TableCell>
             </TableRow>
             <TableRow key="2">
               <TableCell className="w-[20%]">
-                <b>Body Stats</b>
+                <b>Planar Sphere Stats</b>
               </TableCell>
               <TableCell className="w-[80%]">
-                {buildAccordion(createAccordionData(relicBreakdown?.bodyStats))}
+                {buildAccordion(createAccordionData(ornamentBreakdown?.planarSphereStats))}
               </TableCell>
             </TableRow>
             <TableRow key="3">
               <TableCell className="w-[20%]">
-                <b>Feet Stats</b>
+                <b>Link Rope Stats</b>
               </TableCell>
               <TableCell className="w-[80%]">
-                {buildAccordion(createAccordionData(relicBreakdown?.feetStats))}
+                {buildAccordion(createAccordionData(ornamentBreakdown?.linkRopeStats))}
               </TableCell>
             </TableRow>
           </TableBody>

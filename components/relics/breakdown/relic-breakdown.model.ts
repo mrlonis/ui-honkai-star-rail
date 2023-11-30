@@ -10,7 +10,7 @@ export interface RelicBreakdown {
 }
 
 export interface RelicBreakdownMap {
-  [key: string]: RelicBreakdownCharacter[]
+  [key: string]: RelicBreakdownCharacter[] | null | undefined
 }
 
 export interface RelicBreakdownCharacter {
