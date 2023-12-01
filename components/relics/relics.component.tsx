@@ -13,7 +13,8 @@ import {
 } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import React, { Key, PropsWithChildren } from 'react'
-import { RelicsResponse } from './relics-response'
+import { buildImageUrl } from '../utils'
+import { Relic } from './relics-response'
 
 const columns: {
   name: string
@@ -23,16 +24,9 @@ const columns: {
   { name: 'EFFECT', uid: 'effect' },
 ]
 
-function buildImageUrl(imageUrl: string | null | undefined) {
-  if (!imageUrl) {
-    return ''
-  }
-  return `http://localhost:9003/api/${imageUrl}`
-}
-
 export default function RelicsComponent(
   props: PropsWithChildren<{
-    relics: RelicsResponse[]
+    relics: Relic[]
   }>,
 ) {
   const router = useRouter()
@@ -52,7 +46,7 @@ export default function RelicsComponent(
     setRelicsData(filteredData)
   }
 
-  const renderCell = React.useCallback((relic: RelicsResponse, columnKey: Key) => {
+  const renderCell = React.useCallback((relic: Relic, columnKey: Key) => {
     if (typeof columnKey !== 'string') {
       return <p>ERROR</p>
     }

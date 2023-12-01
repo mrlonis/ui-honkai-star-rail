@@ -13,7 +13,8 @@ import {
 } from '@nextui-org/react'
 import { useRouter } from 'next/navigation'
 import React, { Key, PropsWithChildren } from 'react'
-import { OrnamentsResponse } from './ornaments-response'
+import { buildImageUrl } from '../utils'
+import { Ornament } from './ornaments-response'
 
 const columns: {
   name: string
@@ -23,16 +24,9 @@ const columns: {
   { name: 'EFFECT', uid: 'effect' },
 ]
 
-function buildImageUrl(imageUrl: string | null | undefined) {
-  if (!imageUrl) {
-    return ''
-  }
-  return `http://localhost:9003/api/${imageUrl}`
-}
-
 export default function OrnamentsComponent(
   props: PropsWithChildren<{
-    ornaments: OrnamentsResponse[]
+    ornaments: Ornament[]
   }>,
 ) {
   const router = useRouter()
@@ -52,7 +46,7 @@ export default function OrnamentsComponent(
     setOrnamentsData(filteredData)
   }
 
-  const renderCell = React.useCallback((ornament: OrnamentsResponse, columnKey: Key) => {
+  const renderCell = React.useCallback((ornament: Ornament, columnKey: Key) => {
     if (typeof columnKey !== 'string') {
       return <p>ERROR</p>
     }

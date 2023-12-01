@@ -1,4 +1,4 @@
-export interface RelicsResponse {
+export interface Relic {
   [key: string]: string | null | undefined
   id: string
   name: string

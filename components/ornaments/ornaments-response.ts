@@ -1,4 +1,4 @@
-export interface OrnamentsResponse {
+export interface Ornament {
   [key: string]: string | null | undefined
   id: string
   name: string

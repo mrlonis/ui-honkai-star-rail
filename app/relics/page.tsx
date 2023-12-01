@@ -1,10 +1,10 @@
-import { RelicsResponse } from '@/components/relics/relics-response'
+import { Relic } from '@/components/relics/relics-response'
 import RelicsComponent from '@/components/relics/relics.component'
 
 // TODO - Eventually we'll want to remove this when the backend is deployed somewhere
 export const dynamic = 'force-dynamic'
 
-async function getData(): Promise<RelicsResponse[]> {
+async function getData(): Promise<Relic[]> {
   const res = await fetch('http://localhost:9003/api/v2/relics', { next: { revalidate: 1 } })
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.

@@ -1,10 +1,10 @@
 import OrnamentBreakdownComponent from '@/components/ornaments/breakdown/breakdown.component'
-import { OrnamentsResponse } from '@/components/ornaments/ornaments-response'
+import { Ornament } from '@/components/ornaments/ornaments-response'
 
 // TODO - Eventually we'll want to remove this when the backend is deployed somewhere
 export const dynamic = 'force-dynamic'
 
-async function getOrnament(name: string): Promise<OrnamentsResponse> {
+async function getOrnament(name: string): Promise<Ornament> {
   const res = await fetch(`http://localhost:9003/api/v2/ornament?name=${name}`, { next: { revalidate: 1 } })
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
