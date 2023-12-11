@@ -18,6 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from '@nextui-org/react'
+import Link from 'next/link'
 import React from 'react'
 import useSWR from 'swr'
 import { RelicBreakdown, RelicBreakdownCharacter, RelicBreakdownMap } from './relic-breakdown.model'
@@ -80,18 +81,19 @@ export default function RelicBreakdownComponent(props: { relicId: string }) {
     fetcher(relicId, relicDepth),
   )
 
-  const renderSubstatsCell = React.useCallback((item: RelicBreakdownCharacter, columnKey: string | number) => {
+  const renderSubstatsCell = React.useCallback((character: RelicBreakdownCharacter, columnKey: string | number) => {
     switch (columnKey) {
       case 'name':
+        let linkValue = `/${character.name}`
         return (
           <p>
-            <b>{item.name}</b>
+            <b>{character.name}</b>
           </p>
         )
       case 'substats':
         return (
           <p>
-            <b>Substats:</b> {build_substats_string(item.substats)}
+            <b>Substats:</b> {build_substats_string(character.substats)}
           </p>
         )
       default:
@@ -136,7 +138,9 @@ export default function RelicBreakdownComponent(props: { relicId: string }) {
                   <TableRow key={relicBreakdownCharacter.id}>
                     {(columnKey) => (
                       <TableCell className={columnKey === 'name' ? 'text-right w-[20%]' : 'text-left w-[85%]'}>
-                        {renderSubstatsCell(relicBreakdownCharacter, columnKey)}
+                        <Link key={relicBreakdownCharacter.id} href={`/${relicBreakdownCharacter.name}`}>
+                          {renderSubstatsCell(relicBreakdownCharacter, columnKey)}
+                        </Link>
                       </TableCell>
                     )}
                   </TableRow>
