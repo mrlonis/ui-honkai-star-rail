@@ -1,7 +1,7 @@
 import { Ornament } from './ornaments/ornaments-response'
 import { Relic } from './relics/relics-response'
 
-export interface Character {
+export interface ICharacter {
   id: string
   name: string
   imageUrl: string | null | undefined

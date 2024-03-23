@@ -2,12 +2,12 @@ import { Card, CardBody } from '@nextui-org/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { PropsWithChildren } from 'react'
-import { Character } from './characters-response'
+import { ICharacter } from './characters-response'
 import { buildImageUrl } from './utils'
 
 export default function CharactersComponent(
   props: PropsWithChildren<{
-    characters: Character[]
+    characters: ICharacter[]
   }>,
 ) {
   return (

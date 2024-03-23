@@ -1,10 +1,10 @@
-import { Character } from '@/components/characters-response'
+import { ICharacter } from '@/components/characters-response'
 import CharactersComponent from '@/components/characters.component'
 
 // TODO - Eventually we'll want to remove this when the backend is deployed somewhere
 export const dynamic = 'force-dynamic'
 
-async function getData(): Promise<Character[]> {
+async function getData(): Promise<ICharacter[]> {
   const res = await fetch('http://localhost:9003/api/v2/characters?sort=rarity,desc&sort=name,asc', {
     next: { revalidate: 1 },
   })

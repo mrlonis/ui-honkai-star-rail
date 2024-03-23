@@ -1,9 +1,9 @@
-import { Character } from '@/components/characters-response'
+import { ICharacter } from '@/components/characters-response'
 
 // TODO - Eventually we'll want to remove this when the backend is deployed somewhere
 export const dynamic = 'force-dynamic'
 
-async function getCharacter(name: string): Promise<Character> {
+async function getCharacter(name: string): Promise<ICharacter> {
   const res = await fetch(`http://localhost:9003/api/v2/character?name=${name}`, { next: { revalidate: 1 } })
   // The return value is *not* serialized
   // You can return Date, Map, Set, etc.
