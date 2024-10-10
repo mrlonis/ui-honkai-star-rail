@@ -39,8 +39,8 @@ export default function RelicsComponent(
     console.log('filterData(): Starting...')
     console.log(e.target.value)
     setNameFilter(e.target.value)
-    const filteredData = props.relics.filter(
-      (relic) => relic.name?.toLowerCase().includes(e.target.value.toLowerCase()),
+    const filteredData = props.relics.filter((relic) =>
+      relic.name?.toLowerCase().includes(e.target.value.toLowerCase()),
     )
     console.log(filteredData)
     setRelicsData(filteredData)
@@ -88,7 +88,7 @@ export default function RelicsComponent(
         onSelectionChange={(value) => {
           const testValue = value as Set<string>
           setSelectedKeys(value)
-          const selectedUser = relicsData.find((relic) => relic.id === testValue.entries().next().value[0])
+          const selectedUser = relicsData.find((relic) => relic.id === (testValue.entries().next().value ?? [''])[0])
           if (selectedUser) {
             router.push(`/relics/breakdown/${selectedUser.name ?? 'error/error'}`)
           } else {

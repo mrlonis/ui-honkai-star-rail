@@ -39,8 +39,8 @@ export default function OrnamentsComponent(
     console.log('filterData(): Starting...')
     console.log(e.target.value)
     setNameFilter(e.target.value)
-    const filteredData = props.ornaments.filter(
-      (ornament) => ornament.name?.toLowerCase().includes(e.target.value.toLowerCase()),
+    const filteredData = props.ornaments.filter((ornament) =>
+      ornament.name?.toLowerCase().includes(e.target.value.toLowerCase()),
     )
     console.log(filteredData)
     setOrnamentsData(filteredData)
@@ -77,7 +77,7 @@ export default function OrnamentsComponent(
         onSelectionChange={(value) => {
           const testValue = value as Set<string>
           setSelectedKeys(value)
-          const selectedUser = ornamentsData.find((relic) => relic.id === testValue.entries().next().value[0])
+          const selectedUser = ornamentsData.find((relic) => relic.id === (testValue.entries().next().value ?? [''])[0])
           if (selectedUser) {
             router.push(`/ornaments/breakdown/${selectedUser.name ?? 'error/error'}`)
           } else {
